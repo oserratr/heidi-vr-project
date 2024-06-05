@@ -163,7 +163,7 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
-    Android: com.HEADGeneve.YOUR_DEPARTMENT_YEAR.YOUR_NAME.DemoBomb
+    Android: com.HEADGeneve.MD_1.SERRAT_THIEL_BLIDARIU.HeidiProject
   buildNumber:
     Standalone: 0
     VisionOS: 0
