@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using QuillAnim;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class TriggerFenetre : MonoBehaviour
 {
@@ -11,12 +12,12 @@ public class TriggerFenetre : MonoBehaviour
     public GameObject animBird;
     // declarer un variable pour que le HingeJoint de ce gameobject soit aussi en mode edit
     public HingeJoint hingeJoint;
-    //public float targetAngle;
     private float motorSpeed = 50f;
     private float motorForce = 50f;
 
     private float waitSecondOpen = 2f;
-
+    private float waitSecondClose = 12f;
+    Coroutine co;
 
 
 
@@ -28,6 +29,7 @@ public class TriggerFenetre : MonoBehaviour
         animBird.GetComponent<QuillAnimComponent>().enabled = true;
         // Turn off animation of bird
         animBird.GetComponent<Animator>().enabled = false;
+        this.GetComponent<Animator>().enabled = false;
     }
     void Update()
     {
@@ -40,8 +42,19 @@ public class TriggerFenetre : MonoBehaviour
         else if (gameObject.GetComponent<HingeJoint>().angle > 10)
         {
             // Apres 2 second lancer l'animation du bird
-            StartCoroutine(StartAnimationOpen());
+            co = StartCoroutine(StartAnimationOpen());
+
+            if (animBird.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime > 1 && !animBird.GetComponent<Animator>().IsInTransition(0))
+            {
+                StopCoroutine(co);
+                //reset transform component de ce gameobject
+                this.transform.position = new Vector3(0, 0, 0);
+                animBird.GetComponent<Animator>().enabled = false;
+                animBird.GetComponent<QuillAnimComponent>().enabled = false;
+                this.GetComponent<XRGrabInteractable>().enabled = true;
+            }
         }
+
 
     }
 
@@ -49,6 +62,9 @@ public class TriggerFenetre : MonoBehaviour
     IEnumerator StartAnimationOpen()
     {
         yield return new WaitForSeconds(waitSecondOpen);
+        //this.GetComponent<XRGrabInteractable>().enabled = false;
+
+        // desactiver le script de ce gameobject XR Grab Interactable
         if (hingeJoint == null)
         {
             hingeJoint = GetComponent<HingeJoint>();
@@ -60,7 +76,7 @@ public class TriggerFenetre : MonoBehaviour
         motor.targetVelocity = motorSpeed;
         hingeJoint.motor = motor;
         hingeJoint.useMotor = true;
-        //declarer une variable float targetAngle
+        //declarer une variable float targetAngleOpen
         float targetAngle = 90;
         float currentAngle = hingeJoint.angle;
         float angleDifference = targetAngle - currentAngle;
@@ -69,9 +85,33 @@ public class TriggerFenetre : MonoBehaviour
         motor.targetVelocity = angleDifference > 0 ? motorSpeed : -motorSpeed;
         /*hingeJoint.motor = motor;*/
         // Active animation du bird
-        animBird.GetComponent<QuillAnimComponent>().enabled = true;
-        animBird.GetComponent<Animator>().enabled = true;
+
+        if (currentAngle >= 85)
+        {
+            animBird.GetComponent<QuillAnimComponent>().enabled = true;
+            animBird.GetComponent<Animator>().enabled = true;
+            //si Animator de animBird est aux 3/4 de l'animation start l'animation de cet gameobject
+            if (animBird.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime > 0.75 && !animBird.GetComponent<Animator>().IsInTransition(0))
+            {
+                this.GetComponent<Animator>().enabled = true;
+                hingeJoint.useMotor = false;
+
+            }
+
+
+            //si Animator de animBird est terminé arreter l'animation du bird
+            /*if (animBird.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime > 1 && !animBird.GetComponent<Animator>().IsInTransition(0))
+            {
+                animBird.GetComponent<Animator>().enabled = false;
+                animBird.GetComponent<QuillAnimComponent>().enabled = false;
+                // Arreter le moteur
+                this.GetComponent<XRGrabInteractable>().enabled = true;
+            }*/
+        }
+
     }
+
+
 
 
 
