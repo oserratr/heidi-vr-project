@@ -6,18 +6,31 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class TriggerFenetre : MonoBehaviour
 {
-
+    //Variables pour declencher les sons
     public AudioSource openSoundWindow;
     public AudioSource closeSoundWindow;
+
+    //Variables animation enter et exit bird
     public GameObject animBird;
-    // declarer un variable pour que le HingeJoint de ce gameobject soit aussi en mode edit
+
+
+    //Variables private pour fermeture et ouverture de la fenetre automatique
     public HingeJoint hingeJoint;
     private float motorSpeed = 50f;
     private float motorForce = 50f;
 
+    //Variables pour vitesse attente fermeture et ouverture de la fenetre automatique
     private float waitSecondOpen = 2f;
     private float waitSecondClose = 12f;
+
+    //Variables pour coroutine
     Coroutine co;
+    bool cocourtine = false;
+
+    //Gameobject pour les fenetres saisons
+    public GameObject printempsFenetre;
+    public GameObject eteFenetre;
+    public GameObject automneFenetre;
 
 
 
@@ -30,6 +43,7 @@ public class TriggerFenetre : MonoBehaviour
         // Turn off animation of bird
         animBird.GetComponent<Animator>().enabled = false;
         this.GetComponent<Animator>().enabled = false;
+
     }
     void Update()
     {
@@ -39,22 +53,26 @@ public class TriggerFenetre : MonoBehaviour
             animBird.GetComponent<Animator>().enabled = false;
             animBird.GetComponent<QuillAnimComponent>().enabled = false;
         }
-        else if (gameObject.GetComponent<HingeJoint>().angle > 10)
+        else if (gameObject.GetComponent<HingeJoint>().angle > 10 && cocourtine == false)
         {
             // Apres 2 second lancer l'animation du bird
             co = StartCoroutine(StartAnimationOpen());
-
-            if (animBird.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime > 1 && !animBird.GetComponent<Animator>().IsInTransition(0))
+            cocourtine = true;
+        }
+        else if (gameObject.GetComponent<HingeJoint>().angle >= 85)
+        {
+            animBird.GetComponent<QuillAnimComponent>().enabled = true;
+            animBird.GetComponent<Animator>().enabled = true;
+            //si Animator de animBird est aux 3/4 de l'animation start l'animation de cet gameobject
+            if (animBird.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime > 0.75 && !animBird.GetComponent<Animator>().IsInTransition(0))
             {
-                StopCoroutine(co);
-                //reset transform component de ce gameobject
-                this.transform.position = new Vector3(0, 0, 0);
-                animBird.GetComponent<Animator>().enabled = false;
-                animBird.GetComponent<QuillAnimComponent>().enabled = false;
-                this.GetComponent<XRGrabInteractable>().enabled = true;
+                this.GetComponent<Animator>().enabled = true;
+                hingeJoint.useMotor = false;
+                //this.GetComponent<XRGrabInteractable>().enabled = true;
+                //this.GetComponent<Animator>().enabled = false;
+
             }
         }
-
 
     }
 
@@ -62,7 +80,7 @@ public class TriggerFenetre : MonoBehaviour
     IEnumerator StartAnimationOpen()
     {
         yield return new WaitForSeconds(waitSecondOpen);
-        //this.GetComponent<XRGrabInteractable>().enabled = false;
+        this.GetComponent<XRGrabInteractable>().enabled = false;
 
         // desactiver le script de ce gameobject XR Grab Interactable
         if (hingeJoint == null)
@@ -83,36 +101,12 @@ public class TriggerFenetre : MonoBehaviour
 
         // Définir la vitesse du moteur en fonction de la différence d'angle
         motor.targetVelocity = angleDifference > 0 ? motorSpeed : -motorSpeed;
-        /*hingeJoint.motor = motor;*/
-        // Active animation du bird
-
-        if (currentAngle >= 85)
-        {
-            animBird.GetComponent<QuillAnimComponent>().enabled = true;
-            animBird.GetComponent<Animator>().enabled = true;
-            //si Animator de animBird est aux 3/4 de l'animation start l'animation de cet gameobject
-            if (animBird.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime > 0.75 && !animBird.GetComponent<Animator>().IsInTransition(0))
-            {
-                this.GetComponent<Animator>().enabled = true;
-                hingeJoint.useMotor = false;
-
-            }
-
-
-            //si Animator de animBird est terminé arreter l'animation du bird
-            /*if (animBird.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime > 1 && !animBird.GetComponent<Animator>().IsInTransition(0))
-            {
-                animBird.GetComponent<Animator>().enabled = false;
-                animBird.GetComponent<QuillAnimComponent>().enabled = false;
-                // Arreter le moteur
-                this.GetComponent<XRGrabInteractable>().enabled = true;
-            }*/
-        }
 
     }
 
-
-
-
-
 }
+
+
+
+
+
