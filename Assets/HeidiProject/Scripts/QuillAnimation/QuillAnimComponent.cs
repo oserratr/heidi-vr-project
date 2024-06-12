@@ -9,7 +9,7 @@ namespace QuillAnim
     {
         public int frameRate = 12;
         public bool persistFrames = false;
-        private QuillAnimation _animation;
+        public QuillAnimation _animation;
 
         void Start()
         {
