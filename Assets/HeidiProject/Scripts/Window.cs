@@ -9,6 +9,10 @@ public class Window : MonoBehaviour
     public SplineContainer splineEnter;
     public SplineContainer splineExit;
 
+    [Tooltip("Fan number. Limit between 1 and 4")]
+    [Range(1, 4)]
+    public int fan = 1;
+
     // Window States
     public enum WindowState
     {
@@ -25,6 +29,7 @@ public class Window : MonoBehaviour
     void Start()
     {
         hinge = GetComponent<HingeJoint>();
+        UdpRelaysManager.Instance.RelayOff(fan);
     }
 
     // Update is called once per frame
@@ -43,6 +48,9 @@ public class Window : MonoBehaviour
                 {
                     // Change state
                     state = WindowState.Open;
+
+                    // Start fan
+                    UdpRelaysManager.Instance.RelayOn(fan);
 
                     // Finish opening the windows
                     JointSpring hingeSpring = hinge.spring;
@@ -63,6 +71,9 @@ public class Window : MonoBehaviour
                 {
                     // Change state
                     state = WindowState.Closed;
+
+                    // Stop fan
+                    UdpRelaysManager.Instance.RelayOff(fan);
 
                     // Notify the bird
                     Bird.instance.OnWindowClosed(this);

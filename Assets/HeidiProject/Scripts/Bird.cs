@@ -1,3 +1,4 @@
+using QuillAnim;
 using UnityEngine;
 using UnityEngine.Splines;
 
@@ -6,6 +7,9 @@ public class Bird : MonoBehaviour
     public static Bird instance;
 
     SplineAnimate splineAnimate;
+    QuillAnimComponent quillAnim;
+
+    ParticleSystem particles;
 
     StateMachine<Bird, StateBird> sm;
 
@@ -28,6 +32,22 @@ public class Bird : MonoBehaviour
 
     class StateInside : StateBird
     {
+
+        // enter event
+        override public void Enter()
+        {
+            parent.quillAnim.enabled = false;
+            parent.particles.Stop();
+        }   
+
+        // exit event
+        override public void Exit()
+        {
+            parent.quillAnim.enabled = true;
+            parent.particles.Play();
+        }
+        
+
         public override void OnWindowOpened(Window window)
         {
             Debug.Log("Bird is inside and window opened");
@@ -94,6 +114,8 @@ public class Bird : MonoBehaviour
         instance = this;
 
         splineAnimate = GetComponent<SplineAnimate>();
+        quillAnim = GetComponentInChildren<QuillAnimComponent>();
+        particles = GetComponentInChildren<ParticleSystem>();
 
         // Subscribe to the Completed event
         splineAnimate.Completed += OnSplineAnimationCompleted;
