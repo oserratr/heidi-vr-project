@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.ShaderGraph.Drawing;
 using UnityEngine;
 using UnityEngine.Splines;
 
@@ -22,6 +19,7 @@ public class Bird : MonoBehaviour
         public virtual void OnWindowOpened(Window window)
         {
             Debug.Log("Bird is somewhere and window opened");
+            window.Close();
         }
 
         public virtual void OnWindowClosed(Window window)
