@@ -101,6 +101,7 @@ public class Bird : MonoBehaviour
             if (parent.splinesToPlay.Count == 0)
             {
                 Debug.Log("All splines have been played");
+                LevelManager.NextLevel();
             }
         }
 
