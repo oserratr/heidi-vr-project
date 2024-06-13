@@ -664,6 +664,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38db4ee31d87544cb836dc2f51a5db7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  splinesToPlay:
+  - {fileID: 48530285}
+  - {fileID: 802751622}
+  - {fileID: 1992239105}
+  - {fileID: 1074307273}
 --- !u!1 &566290686
 GameObject:
   m_ObjectHideFlags: 0

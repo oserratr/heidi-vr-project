@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using QuillAnim;
 using UnityEngine;
 using UnityEngine.Splines;
@@ -5,6 +6,8 @@ using UnityEngine.Splines;
 public class Bird : MonoBehaviour
 {
     public static Bird instance;
+
+    public List<SplineContainer> splinesToPlay;
 
     SplineAnimate splineAnimate;
     QuillAnimComponent quillAnim;
@@ -90,6 +93,15 @@ public class Bird : MonoBehaviour
 
             // close the window
             parent.activeWindow.Close();
+
+            // Remove the spline from the list to play
+            parent.splinesToPlay.Remove(parent.splineAnimate.Container);
+
+            // Go to next scene when all splines have been played
+            if (parent.splinesToPlay.Count == 0)
+            {
+                Debug.Log("All splines have been played");
+            }
         }
 
     }
