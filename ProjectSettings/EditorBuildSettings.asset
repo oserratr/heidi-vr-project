@@ -8,6 +8,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/HeidiProject/Scenes/MainScene/MainScene.unity
     guid: 3e97c26ebc77e4548af8f980efe3229e
+  - enabled: 0
+    path: Assets/Demo/Scenes/DemoSceneHands.unity
+    guid: a7359d5c3bb734bcbb74f6f01800b617
   m_configObjects:
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 61c418b2bd7a149b0822d09e4170c9fe, type: 2}
     com.unity.xr.openxr.settings4: {fileID: 11400000, guid: 785fdf7ddd28b4315974d79987f9a178, type: 2}
