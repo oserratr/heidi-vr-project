@@ -48,19 +48,19 @@ public class ExampleSplineController : MonoBehaviour
         if (Count == 1)
         {
             
-            splineAnimate.ChangeSpline(EteOut);
+            splineAnimate.Container = EteOut;
             splineAnimate.Restart(true);
             
         }
         else if (Count == 2)
         {
-            splineAnimate.ChangeSpline(AutomnIn);
+            splineAnimate.Container = AutomnIn;
             splineAnimate.Restart(true);
             
         }
         else if (Count == 3)
         {   
-            splineAnimate.ChangeSpline(AutomnOut);
+            splineAnimate.Container = AutomnOut;
             
             
             splineAnimate.Restart(true);
@@ -75,7 +75,6 @@ public class ExampleSplineController : MonoBehaviour
     
     }
 
- 
 
     void OnDestroy()
     {

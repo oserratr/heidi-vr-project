@@ -16,7 +16,7 @@ public class TriggerFenetreHiverSort : MonoBehaviour
     public GameObject birdOutside;
 
     //Variables private pour fermeture et ouverture de la fenetre automatique
-    public HingeJoint hingeJoint;
+    public new HingeJoint hingeJoint;
     //Variable temps
     public float delay = 6f; // Temps d'attente avant de lancer l'animation
 

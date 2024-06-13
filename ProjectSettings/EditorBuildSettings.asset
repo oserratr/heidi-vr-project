@@ -4,7 +4,10 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/HeidiProject/Scenes/MainScene/MainScene.unity
+    guid: 3e97c26ebc77e4548af8f980efe3229e
   m_configObjects:
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 61c418b2bd7a149b0822d09e4170c9fe, type: 2}
     com.unity.xr.openxr.settings4: {fileID: 11400000, guid: 785fdf7ddd28b4315974d79987f9a178, type: 2}

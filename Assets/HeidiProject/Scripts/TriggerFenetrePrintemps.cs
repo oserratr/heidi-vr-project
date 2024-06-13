@@ -17,13 +17,13 @@ public class TriggerFenetrePrintemps : MonoBehaviour
     public bool birdIsInside = false;
 
     //Variables private pour fermeture et ouverture de la fenetre automatique
-    public HingeJoint hingeJoint;
+    public new HingeJoint hingeJoint;
     private float motorSpeed = 50f;
     private float motorForce = 50f;
 
     //Variables pour vitesse attente fermeture et ouverture de la fenetre automatique
     private float waitSecondOpen = 2f;
-    private float waitSecondClose = 12f;
+    // private float waitSecondClose = 12f;
 
     //Variables pour coroutine
     Coroutine co;
