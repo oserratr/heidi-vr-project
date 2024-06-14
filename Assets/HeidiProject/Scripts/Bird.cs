@@ -41,7 +41,7 @@ public class Bird : MonoBehaviour
         {
             parent.quillAnim.enabled = false;
             parent.particles.Stop();
-        }   
+        }
 
         // exit event
         override public void Exit()
@@ -49,7 +49,7 @@ public class Bird : MonoBehaviour
             parent.quillAnim.enabled = true;
             parent.particles.Play();
         }
-        
+
 
         public override void OnWindowOpened(Window window)
         {
@@ -69,6 +69,14 @@ public class Bird : MonoBehaviour
 
     class StateOutside : StateBird
     {
+        override public void Update()
+        {
+
+            /*if (GetStateTime() > 5)
+            {
+                LevelManager.NextLevel();
+            }*/
+        }
         public override void OnWindowOpened(Window window)
         {
             Debug.Log("Bird is outside and window opened");
